@@ -69,11 +69,10 @@ public class Player : MonoBehaviour
         {
             if (transform.localPosition.x > width + width / 6)
             {
-                transform.localPosition += new Vector3
-                  (Input.GetAxisRaw("Horizontal")
-                    * Time.deltaTime * travelSpeed, 0, 0);
+                transform.localPosition += new Vector3 (Input.GetAxisRaw("Horizontal") * Time.deltaTime * travelSpeed, 0, 0);
             }
         }
+
         if (Input.GetAxisRaw("Vertical") < 0)
         {
             if (transform.localPosition.y > -height / 3f)
