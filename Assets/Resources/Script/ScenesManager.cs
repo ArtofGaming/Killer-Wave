@@ -27,6 +27,10 @@ public class ScenesManager : MonoBehaviour
     {
         
     }
+    public void BeginGame()
+    {
+        SceneManager.LoadScene("testLevel");
+    }
     public void ResetScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -34,6 +38,7 @@ public class ScenesManager : MonoBehaviour
     public void GameOver()
     {
         SceneManager.LoadScene("gameOver");
+        Debug.Log("ENDSCORE: " + GameManager.Instance.GetComponent<ScoreManager>().PlayerScore);
     }
 
 

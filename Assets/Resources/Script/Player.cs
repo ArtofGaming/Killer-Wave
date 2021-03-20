@@ -101,6 +101,7 @@ public class Player : MonoBehaviour
     }
     void Die()
     {
+        GameManager.Instance.LifeLost();
         Destroy(this.gameObject);
     }
     void OnTriggerEnter(Collider other)
