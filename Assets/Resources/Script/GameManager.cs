@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 		switch (sceneNumber)
 		{
 			//testLevel, Level1, Level2, Level3
-			case 3 : case 4 :case 5: case 6:
+			case 3 : case 4 :case 5: 
 			{
 				LightSetup();
 				CameraSetup();
@@ -80,15 +80,16 @@ public class GameManager : MonoBehaviour
 		//lose life
 		if (playerLives >= 1)
 		{
-			playerLives--;
-			Debug.Log("Lives left:" +playerLives);
+			playerLives --;
+			Debug.Log("Lives left: "+playerLives);
 			GetComponent<ScenesManager>().ResetScene();
 		}
 		    else
 		{
+			playerLives = 3;
 			GetComponent<ScenesManager>().GameOver();
 			//reset lives back to 3. 
-			playerLives = 3;
+			
 		}
 	}
 }
