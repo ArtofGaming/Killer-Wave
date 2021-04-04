@@ -245,10 +245,10 @@ public class PlayerShipBuild : MonoBehaviour
 		{
 			playerShip.name = "UpgradedShip";
       
-			/*if (playerShip.transform.Find("energy +1(Clone)"))
+			if (playerShip.transform.Find("energy +1(Clone)"))
 			{
 				playerShip.GetComponent<Player>().Health = 2;
-			} */
+			}
 			DontDestroyOnLoad(playerShip);
 		}
 		GameManager.Instance.GetComponent<ScenesManager>().BeginGame(GameManager.gameLevelScene);

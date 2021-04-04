@@ -7,11 +7,7 @@ public class TitleComponent : MonoBehaviour
 {
     void Start()
     {
-        if (GameManager.playerLives <= 2)
-        {
-            GameManager.playerLives = 3;
-        }
-        
+            GameManager.playerLives = 3; 
     }
     void Update()
     {
