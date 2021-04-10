@@ -1,5 +1,6 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScenesManager : MonoBehaviour
 {
@@ -9,15 +10,29 @@ public class ScenesManager : MonoBehaviour
     int currentSceneNumber = 0;
     bool gameEnding = false;
   public enum Scenes
-  {
-    bootUp,
-    title,
-    shop,
-    level1,
-    level2,
-    level3,
-    gameover
-  }
+    {
+        bootUp,
+        title,
+        shop,
+        level1,
+        level2,
+        level3,
+        gameover
+    }
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void OnSceneLoaded(Scene aScene, LoadSceneMode aMode)
+    {
+        GetComponent<GameManager>().SetLivesDisplay(GameManager.playerLives);
+        if (GameObject.Find("score"))
+        {
+            GameObject.Find("score").GetComponent<Text>().text = ScoreManager.playerScore.ToString();
+        }
+    }
 
     private void Update()
     {

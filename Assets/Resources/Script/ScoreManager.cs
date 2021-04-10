@@ -3,7 +3,7 @@ using UnityEngine.UI;
  
  public class ScoreManager : MonoBehaviour 
  {
-    static int playerScore;
+    public static int playerScore;
     public int PlayersScore 
     {
         get
