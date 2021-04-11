@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TitleComponent : MonoBehaviour
 {
-    void Start()
+  void Update()
+  {
+    if (Input.GetButtonDown("Fire1"))
     {
-            GameManager.playerLives = 3; 
+      SceneManager.LoadScene("shop");
     }
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            SceneManager.LoadScene("shop");
-        }
-    }
+  }
+  void Start()
+  {
+    GameManager.playerLives = 3;
+  }
 }

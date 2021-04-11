@@ -14,12 +14,12 @@ public class ShopPiece : MonoBehaviour
 	void Awake()
 	{
 		if (transform.GetChild(3).GetComponent<Image>() != null)
-        {
-			transform.GetChild(3).GetComponent<Image>().sprite = shopSelection.icon;
-        }
-        if (transform.Find("itemText"))
-        {
+		{
+		  transform.GetChild(3).GetComponent<Image>().sprite = shopSelection.icon;
+		}
+		if(transform.Find("itemText"))
+		{
 			GetComponentInChildren<Text>().text = shopSelection.cost.ToString();
-        }
+		}
 	}
 }

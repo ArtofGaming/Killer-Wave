@@ -59,7 +59,7 @@ public class Player : MonoBehaviour, IActorTemplate
 				}
 				else
 				{
-					health = health - 1;
+					health -= 1;
 				}
 			}
       
