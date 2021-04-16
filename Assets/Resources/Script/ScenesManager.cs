@@ -1,6 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ScenesManager : MonoBehaviour
 {
@@ -20,12 +21,20 @@ public class ScenesManager : MonoBehaviour
     level3,
     gameOver
   }
+    public MusicMode musicMode;
+    public enum MusicMode
+    {
+        noSound,
+        fadeDown,
+        musicOn
+    }
   
   private void OnSceneLoaded(Scene aScene, LoadSceneMode aMode)
   {
-    GetComponent<GameManager>().SetLivesDisplay(GameManager.playerLives); 
-    
-	  if (GameObject.Find("score"))
+    GetComponent<GameManager>().SetLivesDisplay(GameManager.playerLives);
+    StartCoroutine(MusicVolume(MusicMode.musicOn));
+    GetComponent<GameManager>().SetLivesDisplay(GameManager.playerLives);
+	if (GameObject.Find("score"))
     {
       GameObject.Find("score").GetComponent<Text>().text = ScoreManager.playerScore.ToString();
     } 
@@ -33,6 +42,7 @@ public class ScenesManager : MonoBehaviour
   
   void Start()
   {
+        StartCoroutine(MusicVolume(MusicMode.musicOn));
       SceneManager.sceneLoaded += OnSceneLoaded;
   }
  
@@ -84,10 +94,23 @@ public class ScenesManager : MonoBehaviour
                 }
                 Invoke("NextLevel",4);
               }
+                        StartCoroutine(MusicVolume(MusicMode.fadeDown));
              }
+             if (GetComponentInChildren<AudioSource>().clip == null)
+                {
+                    AudioClip lvlMusic = Resources.Load<AudioClip>("Sound/lvlMusic") as AudioClip;
+                    GetComponentInChildren<AudioSource>().clip = lvlMusic;
+                    GetComponentInChildren<AudioSource>().Play();
+                }
           break;
          }
-		}
+         default:
+            {
+                GetComponentInChildren<AudioSource>().clip = null;
+                break;
+            }
+        }
+        
 	}
   
    void NextLevel()
@@ -95,10 +118,13 @@ public class ScenesManager : MonoBehaviour
     gameEnding = false;
     gameTimer = 0;
     SceneManager.LoadScene(GameManager.currentScene+1);
+        StartCoroutine(MusicVolume(MusicMode.musicOn));
   }
   
    public void ResetScene()
   {
+    gameTimer = 0;
+    StartCoroutine(MusicVolume(MusicMode.noSound));
     gameTimer = 0;
     SceneManager.LoadScene(GameManager.currentScene);
   }
@@ -107,4 +133,25 @@ public class ScenesManager : MonoBehaviour
   {
     SceneManager.LoadScene(gameLevel);
   }
+
+    IEnumerator MusicVolume(MusicMode musicMode)
+    {
+        switch (musicMode)
+        {
+            case MusicMode.noSound:
+                GetComponentInChildren<AudioSource>().Stop();
+                break;
+            case MusicMode.fadeDown:
+                GetComponentInChildren<AudioSource>().volume -= Time.deltaTime / 3;
+                break;
+            case MusicMode.musicOn:
+                if (GetComponentInChildren<AudioSource>().clip != null)
+                {
+                    GetComponentInChildren<AudioSource>().Play();
+                    GetComponentInChildren<AudioSource>().volume = 1;
+                }
+                break;
+        }
+        yield return new WaitForSeconds(.1f);
+    }
  }
