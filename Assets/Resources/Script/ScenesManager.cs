@@ -80,7 +80,8 @@ public class ScenesManager : MonoBehaviour
              }
              else
              {
-             //if level is completed
+                        //if level is completed
+              StartCoroutine(MusicVolume(MusicMode.fadeDown));
               if (!gameEnding)
               {
                 gameEnding = true;
@@ -92,9 +93,10 @@ public class ScenesManager : MonoBehaviour
                 {
                   GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTransition> ().GameCompleted = true;
                 }
-                Invoke("NextLevel",4);
+                SendInJsonFormat(SceneManager.GetActiveScene().name);
+                Invoke("NextLevel", 4);
               }
-                        StartCoroutine(MusicVolume(MusicMode.fadeDown));
+                        
              }
              if (GetComponentInChildren<AudioSource>().clip == null)
                 {
@@ -112,6 +114,23 @@ public class ScenesManager : MonoBehaviour
         }
         
 	}
+
+    void SendInJsonFormat(string lastLevel)
+    {
+        if (lastLevel == "level3")
+        {
+            GameStats gameStats = new GameStats();
+            gameStats.livesLeft = GameManager.playerLives;
+            gameStats.completed = System.DateTime.Now.ToString();
+            gameStats.score = ScoreManager.playerScore;
+
+            string json = JsonUtility.ToJson(gameStats, true);
+            Debug.Log(json);
+            Debug.Log(Application.persistentDataPath + "/GameStatsSaved.json");
+            System.IO.File.WriteAllText(Application.persistentDataPath +
+             "/GameStatsSaved.json", json);
+        }
+    }
   
    void NextLevel()
   {
